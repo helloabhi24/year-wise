@@ -9,6 +9,7 @@ shinyUI(
     #call dashboardsidebar() fun.for dashboard sidbar
     dashboardSidebar(
      selectInput("sel","Select One",choices = colnames(IInd[,c(5:23,25:27,29:53)]))
+     
      # ,
      # selectInput("s","NO Touch",choices = colnames(IInd[,3]) )
     ),
@@ -18,14 +19,23 @@ shinyUI(
       br(),
       #call tabsetPanel() fun. for main panel output
       tabsetPanel(
-        tabPanel("Mean, mode",plotlyOutput("plot1")),
-        tabPanel("line",selectInput("s","NO Touch",choices = colnames(IInd[,3]) ),plotlyOutput("plot2")),
-        tabPanel("2013",plotlyOutput("plot3")),
-        tabPanel("2014",plotlyOutput("plot4")),
-        tabPanel("2013 IInd Sem",plotlyOutput("plot5")),
-        tabPanel("2014 IInd Sem",plotlyOutput("plot6")),
-        tabPanel("2013 YEAR",plotlyOutput("plot7")),
-        tabPanel("2014 YEAR",plotlyOutput("plot8"))
+        tabPanel("Mean, mode",tabsetPanel(
+          tabPanel(plotlyOutput("plot1")),
+          tabPanel("line",selectInput("s","NO Touch",choices = colnames(IInd[,3]) ),plotlyOutput("plot2"))
+        )),
+       # tabPanel("line",selectInput("s","NO Touch",choices = colnames(IInd[,3]) ),plotlyOutput("plot2")),
+        tabPanel("2013",tabsetPanel(
+          tabPanel("2013",plotlyOutput("plot3")),
+          tabPanel("2013 IInd Sem",plotlyOutput("plot5")),
+          tabPanel("2013 year",plotlyOutput("plot7"))
+        )
+        ),
+       tabPanel("2014",tabsetPanel(
+         tabPanel("2014",plotlyOutput("plot4")),
+         tabPanel("2014 IInd Sem",plotlyOutput("plot6")),
+         tabPanel("2014 year",plotlyOutput("plot8"))
+       )
+       )
       )
     )
   )
